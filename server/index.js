@@ -138,22 +138,49 @@ app.get('/api/test', (req, res) => {
 
 app.post("/api/recommend", async (req, res) => {
   try {
-    const { sex, age, heightCm, weightKg, activity, goal, prompt } = req.body;
+    const { sex, age, heightCm, weightKg, activity, goal, prompt, language = "en" } = req.body;
 
-    const system = `You are a helpful fitness coach. Give concise, actionable training and nutrition tips.`;
-    const user = `Profile:
-- Sex: ${sex}
-- Age: ${age}
-- Height: ${heightCm} cm
-- Weight: ${weightKg} kg
-- Activity: ${activity}
-- Goal: ${goal}
+    // Validate OpenAI key first
+    if (!OPENAI_KEY) {
+      console.error("Missing OpenAI API key");
+      return res.status(500).json({ error: "Server configuration error - missing API key" });
+    }
 
-User note: ${prompt || "(none)"}
+    // Validate required fields
+    if (!sex || !age || !heightCm || !weightKg || !activity || !goal) {
+      return res.status(400).json({ error: "Missing required profile data" });
+    }
 
-Provide: 5 short recommendations (training, nutrition, recovery) and a 1-2 line summary.`;
+    // Build prompt for the model
+    const system = language === "he" 
+      ? `אתה מאמן כושר מועיל. תן עצות אימון ותזונה תמציתיות וניתנות ליישום.`
+      : `You are a helpful fitness coach. Give concise, actionable training and nutrition tips.`;
+    
+    const user = language === "he"
+      ? `פרופיל:
++- מין: ${sex === "male" ? "זכר" : "נקבה"}
++- גיל: ${age}
++- גובה: ${heightCm} ס״מ
++- משקל: ${weightKg} ק״ג
++- פעילות: ${activity}
++- מטרה: ${goal}
++
++הערת משתמש: ${prompt || "(אין)"}
++
++ספק: 5 המלצות קצרות (אימון, תזונה, החלמה) וסיכום של 1-2 שורות.`
+      : `Profile:
++- Sex: ${sex}
++- Age: ${age}
++- Height: ${heightCm} cm
++- Weight: ${weightKg} kg
++- Activity: ${activity}
++- Goal: ${goal}
++
++User note: ${prompt || "(none)"}
++
++Provide: 5 short recommendations (training, nutrition, recovery) and a 1-2 line summary.`;
 
-    // ✅ use the loaded key
+    // call OpenAI Chat Completions (gpt-3.5-turbo example)
     const apiRes = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -173,16 +200,27 @@ Provide: 5 short recommendations (training, nutrition, recovery) and a 1-2 line 
 
     if (!apiRes.ok) {
       const errText = await apiRes.text();
-      return res.status(502).json({ error: "AI provider error", detail: errText });
+      console.error("OpenAI API error:", errText);
+      return res.status(502).json({ 
+        error: "AI provider error", 
+        detail: errText,
+        status: apiRes.status
+      });
     }
 
     const apiJson = await apiRes.json();
-    const text = apiJson?.choices?.[0]?.message?.content ?? JSON.stringify(apiJson);
+    if (!apiJson?.choices?.[0]?.message?.content) {
+      console.error("Unexpected API response:", apiJson);
+      return res.status(502).json({ error: "Invalid API response format" });
+    }
 
-    res.json({ tips: text });
+    return res.json({ tips: apiJson.choices[0].message.content });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "server_error" });
+    console.error("Server error:", err);
+    return res.status(500).json({ 
+      error: "server_error",
+      message: err.message
+    });
   }
 });
 

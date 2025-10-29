@@ -4,11 +4,17 @@
 import React, { useMemo, useState, useEffect } from "react";
 import "./App.css";
 import RecommendedTips from "./components/RecommendedTips";
+import { translations, type Language } from "./translations.ts";
 
 export default function App() {
   type Sex = "male" | "female";
   type Activity = "sedentary" | "light" | "moderate" | "very" | "athlete";
   type Goal = "cut" | "maintain" | "bulk";
+
+  // Language state
+  const [language, setLanguage] = useState<Language>("en");
+  const t = translations[language];
+  const isRTL = language === "he";
 
   // --- Form State ---
   const [sex, setSex] = useState<Sex>("male");
@@ -18,7 +24,7 @@ export default function App() {
   const [activity, setActivity] = useState<Activity>("moderate");
   const [goal, setGoal] = useState<Goal>("cut");
 
-  // Persist to localStorage (nice UX when reloading)
+  // Persist to localStorage
   useEffect(() => {
     const saved = localStorage.getItem("smartFitnessForm");
     if (saved) {
@@ -30,6 +36,7 @@ export default function App() {
         setWeightKg(Number(s.weightKg ?? 86));
         setActivity(s.activity ?? "moderate");
         setGoal(s.goal ?? "cut");
+        setLanguage(s.language ?? "en");
       } catch {}
     }
   }, []);
@@ -37,9 +44,12 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem(
       "smartFitnessForm",
-      JSON.stringify({ sex, age, heightCm, weightKg, activity, goal })
+      JSON.stringify({ sex, age, heightCm, weightKg, activity, goal, language })
     );
-  }, [sex, age, heightCm, weightKg, activity, goal]);
+    // Update HTML dir attribute for RTL support
+    document.documentElement.dir = isRTL ? "rtl" : "ltr";
+    document.documentElement.lang = language;
+  }, [sex, age, heightCm, weightKg, activity, goal, language, isRTL]);
 
   const activityFactor: Record<Activity, number> = {
     sedentary: 1.2,
@@ -89,28 +99,37 @@ export default function App() {
   const round = (n: number) => Math.round(n);
 
   return (
-    <div className="app-shell">
+    <div className="app-shell" dir={isRTL ? "rtl" : "ltr"}>
       <header className="site-header">
-        <h1 className="brand">Smart Fitness</h1>
-        <p className="tag">Clean, simple starter — React + CSS</p>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 12, marginBottom: 8 }}>
+          <h1 className="brand">{t.brand}</h1>
+          <button
+            className="btn"
+            onClick={() => setLanguage(language === "en" ? "he" : "en")}
+            style={{ fontSize: 20, padding: "4px 12px" }}
+          >
+            {language === "en" ? "🇮🇱 עברית" : "🇺🇸 English"}
+          </button>
+        </div>
+        <p className="tag">{t.tagline}</p>
       </header>
 
       <main className="main">
         <div className="grid two">
           <section className="card fade-in">
-            <h2 className="card-title">Your Profile</h2>
+            <h2 className="card-title">{t.yourProfile}</h2>
             <form className="form" onSubmit={(e) => e.preventDefault()}>
               {/* Sex */}
               <div className="field">
-                <label className="label">Sex</label>
+                <label className="label">{t.sex}</label>
                 <div className="radio-group">
                   <label className={`chip ${sex === "male" ? "chip-active" : ""}`}>
                     <input type="radio" name="sex" checked={sex === "male"} onChange={() => setSex("male")} />
-                    Male
+                    {t.male}
                   </label>
                   <label className={`chip ${sex === "female" ? "chip-active" : ""}`}>
                     <input type="radio" name="sex" checked={sex === "female"} onChange={() => setSex("female")} />
-                    Female
+                    {t.female}
                   </label>
                 </div>
               </div>
@@ -118,7 +137,7 @@ export default function App() {
               {/* Age / Height / Weight */}
               <div className="form-row">
                 <div className="field">
-                  <label className="label">Age</label>
+                  <label className="label">{t.age}</label>
                   <input
                     type="number"
                     className={`input ${!valid.age ? "input-error" : ""}`}
@@ -127,10 +146,10 @@ export default function App() {
                     min={11}
                     max={99}
                   />
-                  {!valid.age && <div className="help">Age must be 11–99.</div>}
+                  {!valid.age && <div className="help">{t.ageValidation}</div>}
                 </div>
                 <div className="field">
-                  <label className="label">Height (cm)</label>
+                  <label className="label">{t.height}</label>
                   <input
                     type="number"
                     className={`input ${!valid.height ? "input-error" : ""}`}
@@ -139,10 +158,10 @@ export default function App() {
                     min={120}
                     max={230}
                   />
-                  {!valid.height && <div className="help">120–230 cm.</div>}
+                  {!valid.height && <div className="help">{t.heightValidation}</div>}
                 </div>
                 <div className="field">
-                  <label className="label">Weight (kg)</label>
+                  <label className="label">{t.weight}</label>
                   <input
                     type="number"
                     className={`input ${!valid.weight ? "input-error" : ""}`}
@@ -151,30 +170,30 @@ export default function App() {
                     min={35}
                     max={240}
                   />
-                  {!valid.weight && <div className="help">35–240 kg.</div>}
+                  {!valid.weight && <div className="help">{t.weightValidation}</div>}
                 </div>
               </div>
 
               {/* Activity */}
               <div className="field">
-                <label className="label">Activity level</label>
+                <label className="label">{t.activityLevel}</label>
                 <select className="select" value={activity} onChange={(e) => setActivity(e.target.value as Activity)}>
-                  <option value="sedentary">Sedentary (little to no exercise)</option>
-                  <option value="light">Light (1–3 days/wk)</option>
-                  <option value="moderate">Moderate (3–5 days/wk)</option>
-                  <option value="very">Very (6–7 days/wk)</option>
-                  <option value="athlete">Athlete (2×/day training)</option>
+                  <option value="sedentary">{t.sedentary}</option>
+                  <option value="light">{t.light}</option>
+                  <option value="moderate">{t.moderate}</option>
+                  <option value="very">{t.very}</option>
+                  <option value="athlete">{t.athlete}</option>
                 </select>
               </div>
 
               {/* Goal */}
               <div className="field">
-                <label className="label">Goal</label>
+                <label className="label">{t.goal}</label>
                 <div className="radio-group">
                   {["cut", "maintain", "bulk"].map((g) => (
                     <label key={g} className={`chip ${goal === g ? "chip-active" : ""}`}>
                       <input type="radio" name="goal" checked={goal === g} onChange={() => setGoal(g as Goal)} />
-                      {g}
+                      {t[g as Goal]}
                     </label>
                   ))}
                 </div>
@@ -182,23 +201,23 @@ export default function App() {
 
               <div className="actions">
                 <button className="btn primary" type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                  Save (local)
+                  {t.saveLocal}
                 </button>
               </div>
             </form>
           </section>
 
           <section className="card fade-in">
-            <h2 className="card-title">Your Targets</h2>
+            <h2 className="card-title">{t.yourTargets}</h2>
             <div className="stats">
-              <Stat label="BMR" value={`${round(bmr)} kcal`} />
-              <Stat label="TDEE" value={`${round(tdee)} kcal`} />
-              <Stat big label="Daily Calories" value={`${round(targetKcal)} kcal`} />
-              <Stat label="Protein" value={`${proteinG} g`} />
-              <Stat label="Fat" value={`${fatG} g`} />
-              <Stat label="Carbs" value={`${carbsG} g`} />
+              <Stat label={t.bmr} value={`${round(bmr)} kcal`} />
+              <Stat label={t.tdee} value={`${round(tdee)} kcal`} />
+              <Stat big label={t.dailyCalories} value={`${round(targetKcal)} kcal`} />
+              <Stat label={t.protein} value={`${proteinG} g`} />
+              <Stat label={t.fat} value={`${fatG} g`} />
+              <Stat label={t.carbs} value={`${carbsG} g`} />
             </div>
-            <p className="note">Mifflin–St Jeor · TDEE = BMR × activity · Cut ≈ −20% · Bulk ≈ +10%</p>
+            <p className="note">{t.targetsNote}</p>
           </section>
         </div>
 
@@ -211,12 +230,12 @@ export default function App() {
             activity={activity}
             goal={goal}
             allValid={allValid}
+            language={language}
           />
         </div>
-
       </main>
 
-      <footer className="site-footer">Disclaimer: Informational only, not medical advice.</footer>
+      <footer className="site-footer">{t.disclaimer}</footer>
     </div>
   );
 }
