@@ -83,6 +83,13 @@ export default function App() {
   const [goal, setGoal] = useState<Goal>("cut");
 
   // ============================================
+  // AI RECOMMENDATIONS STATE
+  // ============================================
+  
+  /** Store AI-generated recommendations */
+  const [aiTips, setAiTips] = useState<string>("");
+
+  // ============================================
   // LOCALSTORAGE PERSISTENCE
   // ============================================
   
@@ -298,10 +305,10 @@ export default function App() {
 
       <main className="main">
         {/* ============================================
-            PROFILE & TARGETS ROW
+            TOP ROW: THREE SECTIONS SIDE-BY-SIDE
             ============================================
-            Two-column grid for profile input and calculated results */}
-        <div className="grid two">
+            Profile, Targets, and AI Input Form */}
+        <div className="grid three">
           
           {/* ===== PROFILE INPUT SECTION ===== */}
           <section className="card fade-in">
@@ -445,13 +452,8 @@ export default function App() {
             {/* Formula explanation note */}
             <p className="note">{t.targetsNote}</p>
           </section>
-        </div>
 
-        {/* ============================================
-            AI RECOMMENDATIONS ROW
-            ============================================
-            Full-width section for AI-powered tips */}
-        <div className="grid two" style={{ marginTop: 20 }}>
+          {/* ===== AI INPUT FORM SECTION ===== */}
           <RecommendedTips
             sex={sex}
             age={age}
@@ -461,8 +463,170 @@ export default function App() {
             goal={goal}
             allValid={allValid}
             language={language}
+            onTipsGenerated={setAiTips}
           />
         </div>
+
+        {/* ============================================
+            BOTTOM ROW: AI RESULTS SECTION
+            ============================================
+            Full-width dynamic display of AI recommendations */}
+        {aiTips && (
+          <div style={{ marginTop: 24 }}>
+            <section 
+              className="card fade-in" 
+              dir={isRTL ? "rtl" : "ltr"}
+              style={{
+                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                color: "white",
+                boxShadow: "0 10px 40px rgba(102, 126, 234, 0.3)",
+                border: "none",
+              }}
+            >
+              {/* Section Header */}
+              <div style={{ 
+                display: "flex", 
+                alignItems: "center", 
+                gap: 12, 
+                marginBottom: 20,
+                paddingBottom: 16,
+                borderBottom: "2px solid rgba(255, 255, 255, 0.2)",
+              }}>
+                <span style={{ fontSize: 36 }}>💡</span>
+                <h2 style={{ 
+                  color: "white", 
+                  margin: 0, 
+                  fontSize: 24,
+                  fontWeight: 600,
+                }}>
+                  {t.yourRecommendations}
+                </h2>
+              </div>
+              
+              {/* AI Recommendations Content Box */}
+              <div 
+                style={{ 
+                  whiteSpace: "pre-wrap",
+                  wordWrap: "break-word",
+                  overflowWrap: "break-word",
+                  lineHeight: "1.8",
+                  fontSize: "16px",
+                  padding: "24px",
+                  backgroundColor: "rgba(255, 255, 255, 0.97)",
+                  borderRadius: "12px",
+                  color: "#1f2937",
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
+                  minHeight: "200px",
+                  maxWidth: "100%",
+                  overflow: "visible",
+                }}
+              >
+                {aiTips.split('\n').map((line, index) => {
+                  const trimmedLine = line.trim();
+                  
+                  // Empty line - add spacing
+                  if (!trimmedLine) {
+                    return <div key={index} style={{ height: 12 }} />;
+                  }
+                  
+                  // Bullet points - styled with icons
+                  if (trimmedLine.startsWith('-')) {
+                    return (
+                      <div 
+                        key={index} 
+                        style={{ 
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: 12,
+                          marginBottom: 14,
+                          paddingLeft: isRTL ? 0 : 8,
+                          paddingRight: isRTL ? 8 : 0,
+                        }}
+                      >
+                        <span style={{ 
+                          color: "#667eea", 
+                          fontWeight: "bold",
+                          fontSize: 20,
+                          flexShrink: 0,
+                          marginTop: 2,
+                        }}>
+                          {isRTL ? "◄" : "►"}
+                        </span>
+                        <span style={{ 
+                          flex: 1,
+                          wordBreak: "break-word",
+                          overflowWrap: "break-word",
+                        }}>
+                          {trimmedLine.replace(/^-\s*/, '')}
+                        </span>
+                      </div>
+                    );
+                  }
+                  
+                  // Section headers/titles (short lines that look like headers)
+                  if (trimmedLine.length < 60 && trimmedLine.match(/^[A-Z\u0590-\u05FF]/) && !trimmedLine.includes('.')) {
+                    return (
+                      <div 
+                        key={index}
+                        style={{
+                          fontWeight: "700",
+                          fontSize: 19,
+                          color: "#667eea",
+                          marginTop: index > 0 ? 20 : 0,
+                          marginBottom: 12,
+                          wordBreak: "break-word",
+                          overflowWrap: "break-word",
+                        }}
+                      >
+                        {trimmedLine}
+                      </div>
+                    );
+                  }
+                  
+                  // Regular paragraph text
+                  return (
+                    <div 
+                      key={index} 
+                      style={{ 
+                        marginBottom: 10,
+                        wordBreak: "break-word",
+                        overflowWrap: "break-word",
+                        maxWidth: "100%",
+                      }}
+                    >
+                      {trimmedLine}
+                    </div>
+                  );
+                })}
+              </div>
+              
+              {/* Footer Note */}
+              <div 
+                style={{ 
+                  marginTop: 20, 
+                  fontSize: 14, 
+                  color: "rgba(255, 255, 255, 0.95)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  padding: "14px 18px",
+                  backgroundColor: "rgba(255, 255, 255, 0.15)",
+                  borderRadius: "10px",
+                  backdropFilter: "blur(10px)",
+                }}
+              >
+                <span style={{ fontSize: 22, flexShrink: 0 }}>💭</span>
+                <span style={{ 
+                  flex: 1,
+                  wordBreak: "break-word",
+                  overflowWrap: "break-word",
+                }}>
+                  {t.recommendationsNote}
+                </span>
+              </div>
+            </section>
+          </div>
+        )}
       </main>
 
       {/* ============================================
