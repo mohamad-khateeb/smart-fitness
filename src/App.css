@@ -1,0 +1,86 @@
+
+/* =========================
+   src/App.css (paste into file)
+   ========================= */
+/* Root theme */
+:root {
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --accent-2: #0ea5e9;
+  --ring: #dbeafe;
+  --radius: 16px;
+  --shadow: 0 8px 30px rgba(0,0,0,0.06);
+  --font: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--text); }
+
+/* Shell */
+.app-shell { min-height: 100%; display: flex; flex-direction: column; }
+.site-header { padding: 32px 16px 8px; text-align: center; }
+.brand { font-size: 28px; font-weight: 700; margin: 0; }
+.tag { color: var(--muted); margin: 6px 0 0; }
+
+.main { display: flex; flex-direction: column; align-items: center; padding: 16px; }
+.grid.two { width: 100%; max-width: 1040px; display: grid; grid-template-columns: 1fr; gap: 20px; }
+/* .grid.three { width: 100%; max-width: 1040px; display: grid; grid-template-columns: 1fr; gap: 20px; } */
+.grid.three { width: 100%; max-width: none; display: grid; grid-template-columns: 1fr; gap: 20px; }
+
+@media (min-width: 900px) { .grid.two { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) { .grid.three { grid-template-columns: repeat(3, 1fr) 1fr; } }
+
+.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
+.card-title { margin: 0 0 12px; font-weight: 600; font-size: 18px; }
+
+/* Form */
+.form { display: grid; gap: 16px; }
+.form-row { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .form-row { grid-template-columns: repeat(3, 1fr); } }
+
+.field { display: flex; flex-direction: column; gap: 8px; }
+.label { font-size: 13px; color: var(--muted); }
+.input, .select { padding: 10px 12px; border-radius: 12px; border: 1px solid #e5e7eb; background: #0ea5e9; font-size: 15px; transition: box-shadow .2s, border-color .2s; }
+.input:focus, .select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--ring); }
+.input-error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.15); }
+.help { font-size: 12px; color: #ef4444; }
+
+.radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; border: 1px solid #e5e7eb; cursor: pointer; user-select: none; transition: all .2s; }
+.chip input { appearance: none; width: 10px; height: 10px; border-radius: 999px; border: 2px solid #9ca3af; display: inline-block; position: relative; }
+.chip-active { background: #ecf2ff; border-color: var(--accent); color: #1f2937; }
+.chip-active input { border-color: var(--accent); background: var(--accent); }
+
+.actions { margin-top: 4px; }
+.btn { padding: 10px 14px; border-radius: 12px; border: 1px solid transparent; cursor: pointer; font-weight: 600; font-size: 14px; transition: transform .05s ease, opacity .2s; }
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; }
+
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 720px) { .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.stat { border: 1px solid #eef0f4; border-radius: 14px; padding: 14px; text-align: center; background: #fff; }
+.stat-big { grid-column: 1 / -1; }
+.stat-label { font-size: 12px; color: var(--muted); }
+.stat-value { font-size: 18px; font-weight: 700; margin-top: 4px; }
+
+/* Wide card */
+.wide { max-width: 1040px; margin: 20px auto 0; }
+.list { margin: 6px 0 0 18px; color: #374151; }
+.note { margin-top: 10px; color: var(--muted); font-size: 12px; }
+
+/* Footer */
+.site-footer { text-align: center; color: var(--muted); font-size: 12px; padding: 18px; }
+
+/* Motion */
+.fade-in { animation: fadeIn .35s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: translateY(0);} }
+
+/* Typography (optional Google Font in index.html) */
+/* <link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" /> */
