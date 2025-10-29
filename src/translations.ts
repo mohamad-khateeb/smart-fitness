@@ -69,6 +69,13 @@ export const translations = {
     carbs: "Carbs",
     targetsNote: "Mifflin–St Jeor · TDEE = BMR × activity · Cut ≈ −20% · Bulk ≈ +10%",
     
+    // Targets Section Explanations
+    bmrExplanation: "Basal Metabolic Rate - the number of calories your body burns at rest just to maintain basic functions (breathing, circulation, cell production).",
+    tdeeExplanation: "Total Daily Energy Expenditure - your BMR plus all the calories you burn through daily activities and exercise.",
+    caloriesExplanation: "Your personalized daily calorie target based on your goal. Cut = 20% deficit, Maintain = TDEE, Bulk = 10% surplus.",
+    macros: "Macros",
+    macrosExplanation: "Protein helps build/maintain muscle, fats support hormones, and carbs provide energy. Distribution is optimized for your goal.",
+    
     // AI Recommendations Section
     recommendedTips: "Recommended Tips",
     recommendationsPrompt: "Ask for personalized training / nutrition tips based on the profile above. Optional: add a short prompt for the AI.",
@@ -135,6 +142,13 @@ export const translations = {
     fat: "שומן",
     carbs: "פחמימות",
     targetsNote: "Mifflin–St Jeor · TDEE = BMR × פעילות · חיתוך ≈ −20% · הגדלה ≈ +10%",
+    
+    // Targets Section Explanations
+    bmrExplanation: "קצב מטבוליזם בסיסי - כמות הקלוריות שהגוף שורף במנוחה רק כדי לתחזק תפקודים בסיסיים (נשימה, זרימת דם, ייצור תאים).",
+    tdeeExplanation: "הוצאת אנרגיה יומית כוללת - ה-BMR שלך בתוספת כל הקלוריות שאתה שורף דרך פעילויות יומיות ופעילות גופנית.",
+    caloriesExplanation: "יעד קלוריות יומי מותאם אישית על סמך המטרה שלך. חיתוך = גירעון 20%, שמירה = TDEE, הגדלה = עודף 10%.",
+    macros: "מקרו",
+    macrosExplanation: "חלבון עוזר לבנות/לתחזק שריר, שומנים תומכים בהורמונים, ופחמימות מספקות אנרגיה. החלוקה מותאמת למטרה שלך.",
     
     // AI Recommendations Section
     recommendedTips: "המלצות מותאמות אישית",

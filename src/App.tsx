@@ -88,6 +88,9 @@ export default function App() {
   
   /** Store AI-generated recommendations */
   const [aiTips, setAiTips] = useState<string>("");
+  
+  /** Show/hide target explanations */
+  const [showExplanations, setShowExplanations] = useState<boolean>(false);
 
   // ============================================
   // LOCALSTORAGE PERSISTENCE
@@ -288,13 +291,14 @@ export default function App() {
           gap: 12, 
           marginBottom: 8 
         }}>
+          <span style={{ fontSize: 40 }}>💪</span>
           <h1 className="brand">{t.brand}</h1>
           
           {/* Language toggle button */}
           <button
             className="btn"
             onClick={() => setLanguage(language === "en" ? "he" : "en")}
-            style={{ fontSize: 20, padding: "4px 12px" }}
+            style={{ fontSize: 20, padding: "6px 14px" }}
             aria-label="Toggle language"
           >
             {language === "en" ? "🇮🇱 עברית" : "🇺🇸 English"}
@@ -311,13 +315,22 @@ export default function App() {
         <div className="grid three">
           
           {/* ===== PROFILE INPUT SECTION ===== */}
-          <section className="card fade-in">
-            <h2 className="card-title">{t.yourProfile}</h2>
+          <section className="card fade-in" style={{ 
+            background: "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)",
+            border: "2px solid #bae6fd"
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+              <span style={{ fontSize: 28 }}>👤</span>
+              <h2 className="card-title" style={{ margin: 0 }}>{t.yourProfile}</h2>
+            </div>
             <form className="form" onSubmit={(e) => e.preventDefault()}>
               
               {/* Sex selection */}
               <div className="field">
-                <label className="label">{t.sex}</label>
+                <label className="label">
+                  <span style={{ marginRight: isRTL ? 0 : 6, marginLeft: isRTL ? 6 : 0 }}>⚧️</span>
+                  {t.sex}
+                </label>
                 <div className="radio-group">
                   <label className={`chip ${sex === "male" ? "chip-active" : ""}`}>
                     <input 
@@ -326,7 +339,7 @@ export default function App() {
                       checked={sex === "male"} 
                       onChange={() => setSex("male")} 
                     />
-                    {t.male}
+                    <span>♂️</span> {t.male}
                   </label>
                   <label className={`chip ${sex === "female" ? "chip-active" : ""}`}>
                     <input 
@@ -335,7 +348,7 @@ export default function App() {
                       checked={sex === "female"} 
                       onChange={() => setSex("female")} 
                     />
-                    {t.female}
+                    <span>♀️</span> {t.female}
                   </label>
                 </div>
               </div>
@@ -344,7 +357,10 @@ export default function App() {
               <div className="form-row">
                 {/* Age */}
                 <div className="field">
-                  <label className="label">{t.age}</label>
+                  <label className="label">
+                    <span style={{ marginRight: isRTL ? 0 : 6, marginLeft: isRTL ? 6 : 0 }}>🎂</span>
+                    {t.age}
+                  </label>
                   <input
                     type="number"
                     className={`input ${!valid.age ? "input-error" : ""}`}
@@ -358,7 +374,10 @@ export default function App() {
 
                 {/* Height */}
                 <div className="field">
-                  <label className="label">{t.height}</label>
+                  <label className="label">
+                    <span style={{ marginRight: isRTL ? 0 : 6, marginLeft: isRTL ? 6 : 0 }}>📏</span>
+                    {t.height}
+                  </label>
                   <input
                     type="number"
                     className={`input ${!valid.height ? "input-error" : ""}`}
@@ -372,7 +391,10 @@ export default function App() {
 
                 {/* Weight */}
                 <div className="field">
-                  <label className="label">{t.weight}</label>
+                  <label className="label">
+                    <span style={{ marginRight: isRTL ? 0 : 6, marginLeft: isRTL ? 6 : 0 }}>⚖️</span>
+                    {t.weight}
+                  </label>
                   <input
                     type="number"
                     className={`input ${!valid.weight ? "input-error" : ""}`}
@@ -387,84 +409,190 @@ export default function App() {
 
               {/* Activity level */}
               <div className="field">
-                <label className="label">{t.activityLevel}</label>
+                <label className="label">
+                  <span style={{ marginRight: isRTL ? 0 : 6, marginLeft: isRTL ? 6 : 0 }}>🏃</span>
+                  {t.activityLevel}
+                </label>
                 <select 
                   className="select" 
                   value={activity} 
                   onChange={(e) => setActivity(e.target.value as Activity)}
                 >
-                  <option value="sedentary">{t.sedentary}</option>
-                  <option value="light">{t.light}</option>
-                  <option value="moderate">{t.moderate}</option>
-                  <option value="very">{t.very}</option>
-                  <option value="athlete">{t.athlete}</option>
+                  <option value="sedentary">🪑 {t.sedentary}</option>
+                  <option value="light">🚶 {t.light}</option>
+                  <option value="moderate">🏃 {t.moderate}</option>
+                  <option value="very">🏋️ {t.very}</option>
+                  <option value="athlete">🏅 {t.athlete}</option>
                 </select>
               </div>
 
               {/* Goal selection */}
               <div className="field">
-                <label className="label">{t.goal}</label>
+                <label className="label">
+                  <span style={{ marginRight: isRTL ? 0 : 6, marginLeft: isRTL ? 6 : 0 }}>🎯</span>
+                  {t.goal}
+                </label>
                 <div className="radio-group">
-                  {["cut", "maintain", "bulk"].map((g) => (
-                    <label 
-                      key={g} 
-                      className={`chip ${goal === g ? "chip-active" : ""}`}
-                    >
-                      <input 
-                        type="radio" 
-                        name="goal" 
-                        checked={goal === g} 
-                        onChange={() => setGoal(g as Goal)} 
-                      />
-                      {t[g as Goal]}
-                    </label>
-                  ))}
+                  <label className={`chip ${goal === "cut" ? "chip-active" : ""}`}>
+                    <input 
+                      type="radio" 
+                      name="goal" 
+                      checked={goal === "cut"} 
+                      onChange={() => setGoal("cut")} 
+                    />
+                    <span>📉</span> {t.cut}
+                  </label>
+                  <label className={`chip ${goal === "maintain" ? "chip-active" : ""}`}>
+                    <input 
+                      type="radio" 
+                      name="goal" 
+                      checked={goal === "maintain"} 
+                      onChange={() => setGoal("maintain")} 
+                    />
+                    <span>➖</span> {t.maintain}
+                  </label>
+                  <label className={`chip ${goal === "bulk" ? "chip-active" : ""}`}>
+                    <input 
+                      type="radio" 
+                      name="goal" 
+                      checked={goal === "bulk"} 
+                      onChange={() => setGoal("bulk")} 
+                    />
+                    <span>📈</span> {t.bulk}
+                  </label>
                 </div>
               </div>
 
-              {/* Save button (scroll to top) */}
+              {/* Save button */}
               <div className="actions">
                 <button 
                   className="btn primary" 
                   type="button" 
                   onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  style={{ width: "100%" }}
                 >
-                  {t.saveLocal}
+                  💾 {t.saveLocal}
                 </button>
               </div>
             </form>
           </section>
 
           {/* ===== CALCULATED TARGETS SECTION ===== */}
-          <section className="card fade-in">
-            <h2 className="card-title">{t.yourTargets}</h2>
+          <section className="card fade-in" style={{ 
+            background: "linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)",
+            border: "2px solid #fcd34d"
+          }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 28 }}>🎯</span>
+                <h2 className="card-title" style={{ margin: 0 }}>{t.yourTargets}</h2>
+              </div>
+              <button 
+                className="btn"
+                onClick={() => setShowExplanations(!showExplanations)}
+                style={{ 
+                  padding: "6px 12px", 
+                  fontSize: 20,
+                  background: "rgba(255, 255, 255, 0.7)",
+                  border: "1px solid #fbbf24"
+                }}
+                title={language === "en" ? "Toggle explanations" : "הצג/הסתר הסברים"}
+              >
+                {showExplanations ? "ℹ️" : "❓"}
+              </button>
+            </div>
             
             {/* Display calculated values in stat grid */}
             <div className="stats">
-              <Stat label={t.bmr} value={`${round(bmr)} kcal`} />
-              <Stat label={t.tdee} value={`${round(tdee)} kcal`} />
-              <Stat big label={t.dailyCalories} value={`${round(targetKcal)} kcal`} />
-              <Stat label={t.protein} value={`${proteinG} g`} />
-              <Stat label={t.fat} value={`${fatG} g`} />
-              <Stat label={t.carbs} value={`${carbsG} g`} />
+              <div className="stat" style={{ background: "linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)" }}>
+                <div style={{ fontSize: 24, marginBottom: 4 }}>🔥</div>
+                <div className="stat-label">{t.bmr}</div>
+                <div className="stat-value">{round(bmr)}</div>
+                <div style={{ fontSize: 11, color: "#475569", marginTop: 2 }}>kcal</div>
+              </div>
+              
+              <div className="stat" style={{ background: "linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%)" }}>
+                <div style={{ fontSize: 24, marginBottom: 4 }}>⚡</div>
+                <div className="stat-label">{t.tdee}</div>
+                <div className="stat-value">{round(tdee)}</div>
+                <div style={{ fontSize: 11, color: "#475569", marginTop: 2 }}>kcal</div>
+              </div>
+              
+              <div className="stat stat-big" style={{ background: "linear-gradient(135deg, #6ee7b7 0%, #34d399 100%)" }}>
+                <div style={{ fontSize: 28, marginBottom: 4 }}>🍽️</div>
+                <div className="stat-label" style={{ color: "#064e3b" }}>{t.dailyCalories}</div>
+                <div className="stat-value" style={{ color: "#064e3b", fontSize: 32 }}>{round(targetKcal)}</div>
+                <div style={{ fontSize: 12, color: "#065f46", marginTop: 2, fontWeight: 600 }}>kcal/day</div>
+              </div>
+              
+              <div className="stat" style={{ background: "linear-gradient(135deg, #fecaca 0%, #fca5a5 100%)" }}>
+                <div style={{ fontSize: 24, marginBottom: 4 }}>🥩</div>
+                <div className="stat-label">{t.protein}</div>
+                <div className="stat-value">{proteinG}g</div>
+              </div>
+              
+              <div className="stat" style={{ background: "linear-gradient(135deg, #fed7aa 0%, #fdba74 100%)" }}>
+                <div style={{ fontSize: 24, marginBottom: 4 }}>🥑</div>
+                <div className="stat-label">{t.fat}</div>
+                <div className="stat-value">{fatG}g</div>
+              </div>
+              
+              <div className="stat" style={{ background: "linear-gradient(135deg, #fde68a 0%, #fcd34d 100%)" }}>
+                <div style={{ fontSize: 24, marginBottom: 4 }}>🍞</div>
+                <div className="stat-label">{t.carbs}</div>
+                <div className="stat-value">{carbsG}g</div>
+              </div>
             </div>
             
-            {/* Formula explanation note */}
-            <p className="note">{t.targetsNote}</p>
+            {/* Explanations Toggle */}
+            {showExplanations && (
+              <div style={{ 
+                marginTop: 16, 
+                padding: 16, 
+                background: "rgba(255, 255, 255, 0.8)",
+                borderRadius: 12,
+                fontSize: 13,
+                lineHeight: 1.6,
+                border: "1px solid #fbbf24"
+              }}>
+                <div style={{ marginBottom: 12 }}>
+                  <strong style={{ color: "#1e40af" }}>🔥 BMR:</strong> {t.bmrExplanation}
+                </div>
+                <div style={{ marginBottom: 12 }}>
+                  <strong style={{ color: "#7c3aed" }}>⚡ TDEE:</strong> {t.tdeeExplanation}
+                </div>
+                <div style={{ marginBottom: 12 }}>
+                  <strong style={{ color: "#059669" }}>🍽️ {t.dailyCalories}:</strong> {t.caloriesExplanation}
+                </div>
+                <div>
+                  <strong style={{ color: "#dc2626" }}>🥩🥑🍞 {t.macros}:</strong> {t.macrosExplanation}
+                </div>
+              </div>
+            )}
+            
+            {/* Formula note */}
+            <p className="note" style={{ marginTop: 12, fontSize: 11 }}>{t.targetsNote}</p>
           </section>
 
           {/* ===== AI INPUT FORM SECTION ===== */}
-          <RecommendedTips
-            sex={sex}
-            age={age}
-            heightCm={heightCm}
-            weightKg={weightKg}
-            activity={activity}
-            goal={goal}
-            allValid={allValid}
-            language={language}
-            onTipsGenerated={setAiTips}
-          />
+          <div style={{ 
+            background: "linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%)",
+            borderRadius: 16,
+            border: "2px solid #c084fc",
+            overflow: "hidden"
+          }}>
+            <RecommendedTips
+              sex={sex}
+              age={age}
+              heightCm={heightCm}
+              weightKg={weightKg}
+              activity={activity}
+              goal={goal}
+              allValid={allValid}
+              language={language}
+              onTipsGenerated={setAiTips}
+            />
+          </div>
         </div>
 
         {/* ============================================
@@ -472,32 +600,34 @@ export default function App() {
             ============================================
             Full-width dynamic display of AI recommendations */}
         {aiTips && (
-          <div style={{ marginTop: 24 }}>
+          <div style={{ marginTop: 32, width: "100%", maxWidth: "1400px" }}>
             <section 
               className="card fade-in" 
               dir={isRTL ? "rtl" : "ltr"}
               style={{
                 background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                 color: "white",
-                boxShadow: "0 10px 40px rgba(102, 126, 234, 0.3)",
+                boxShadow: "0 20px 60px rgba(102, 126, 234, 0.4)",
                 border: "none",
+                padding: 32,
               }}
             >
               {/* Section Header */}
               <div style={{ 
                 display: "flex", 
                 alignItems: "center", 
-                gap: 12, 
-                marginBottom: 20,
-                paddingBottom: 16,
-                borderBottom: "2px solid rgba(255, 255, 255, 0.2)",
+                gap: 16, 
+                marginBottom: 24,
+                paddingBottom: 20,
+                borderBottom: "3px solid rgba(255, 255, 255, 0.3)",
               }}>
-                <span style={{ fontSize: 36 }}>💡</span>
+                <span style={{ fontSize: 42 }}>💡</span>
                 <h2 style={{ 
                   color: "white", 
                   margin: 0, 
-                  fontSize: 24,
-                  fontWeight: 600,
+                  fontSize: 28,
+                  fontWeight: 700,
+                  textShadow: "0 2px 4px rgba(0,0,0,0.2)"
                 }}>
                   {t.yourRecommendations}
                 </h2>
@@ -509,14 +639,14 @@ export default function App() {
                   whiteSpace: "pre-wrap",
                   wordWrap: "break-word",
                   overflowWrap: "break-word",
-                  lineHeight: "1.8",
+                  lineHeight: "1.9",
                   fontSize: "16px",
-                  padding: "24px",
-                  backgroundColor: "rgba(255, 255, 255, 0.97)",
-                  borderRadius: "12px",
+                  padding: "28px",
+                  backgroundColor: "rgba(255, 255, 255, 0.98)",
+                  borderRadius: "16px",
                   color: "#1f2937",
-                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
-                  minHeight: "200px",
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+                  minHeight: "250px",
                   maxWidth: "100%",
                   overflow: "visible",
                 }}
@@ -524,12 +654,10 @@ export default function App() {
                 {aiTips.split('\n').map((line, index) => {
                   const trimmedLine = line.trim();
                   
-                  // Empty line - add spacing
                   if (!trimmedLine) {
-                    return <div key={index} style={{ height: 12 }} />;
+                    return <div key={index} style={{ height: 14 }} />;
                   }
                   
-                  // Bullet points - styled with icons
                   if (trimmedLine.startsWith('-')) {
                     return (
                       <div 
@@ -537,18 +665,18 @@ export default function App() {
                         style={{ 
                           display: "flex",
                           alignItems: "flex-start",
-                          gap: 12,
-                          marginBottom: 14,
-                          paddingLeft: isRTL ? 0 : 8,
-                          paddingRight: isRTL ? 8 : 0,
+                          gap: 14,
+                          marginBottom: 16,
+                          paddingLeft: isRTL ? 0 : 10,
+                          paddingRight: isRTL ? 10 : 0,
                         }}
                       >
                         <span style={{ 
                           color: "#667eea", 
                           fontWeight: "bold",
-                          fontSize: 20,
+                          fontSize: 22,
                           flexShrink: 0,
-                          marginTop: 2,
+                          marginTop: 3,
                         }}>
                           {isRTL ? "◄" : "►"}
                         </span>
@@ -563,32 +691,34 @@ export default function App() {
                     );
                   }
                   
-                  // Section headers/titles (short lines that look like headers)
                   if (trimmedLine.length < 60 && trimmedLine.match(/^[A-Z\u0590-\u05FF]/) && !trimmedLine.includes('.')) {
                     return (
                       <div 
                         key={index}
                         style={{
                           fontWeight: "700",
-                          fontSize: 19,
+                          fontSize: 20,
                           color: "#667eea",
-                          marginTop: index > 0 ? 20 : 0,
-                          marginBottom: 12,
+                          marginTop: index > 0 ? 24 : 0,
+                          marginBottom: 14,
                           wordBreak: "break-word",
                           overflowWrap: "break-word",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 10,
                         }}
                       >
+                        <span style={{ fontSize: 24 }}>🎯</span>
                         {trimmedLine}
                       </div>
                     );
                   }
                   
-                  // Regular paragraph text
                   return (
                     <div 
                       key={index} 
                       style={{ 
-                        marginBottom: 10,
+                        marginBottom: 12,
                         wordBreak: "break-word",
                         overflowWrap: "break-word",
                         maxWidth: "100%",
@@ -603,19 +733,19 @@ export default function App() {
               {/* Footer Note */}
               <div 
                 style={{ 
-                  marginTop: 20, 
-                  fontSize: 14, 
+                  marginTop: 24, 
+                  fontSize: 15, 
                   color: "rgba(255, 255, 255, 0.95)",
                   display: "flex",
                   alignItems: "center",
-                  gap: 10,
-                  padding: "14px 18px",
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                  borderRadius: "10px",
+                  gap: 12,
+                  padding: "16px 20px",
+                  backgroundColor: "rgba(255, 255, 255, 0.2)",
+                  borderRadius: "12px",
                   backdropFilter: "blur(10px)",
                 }}
               >
-                <span style={{ fontSize: 22, flexShrink: 0 }}>💭</span>
+                <span style={{ fontSize: 26, flexShrink: 0 }}>💭</span>
                 <span style={{ 
                   flex: 1,
                   wordBreak: "break-word",
@@ -633,23 +763,17 @@ export default function App() {
           FOOTER
           ============================================
           Legal disclaimer */}
-      <footer className="site-footer">{t.disclaimer}</footer>
+      <footer className="site-footer" style={{ marginTop: 40 }}>
+        ⚠️ {t.disclaimer}
+      </footer>
     </div>
   );
 }
 
 // ============================================
-// STAT COMPONENT
+// STAT COMPONENT (Not used anymore - integrated inline)
 // ============================================
 
-/**
- * Reusable stat display component
- * Shows a label and value in a styled card
- * 
- * @param label - Stat name (e.g., "BMR", "TDEE")
- * @param value - Stat value (e.g., "1800 kcal")
- * @param big - Optional: Make this stat larger/prominent
- */
 function Stat({ 
   label, 
   value, 
