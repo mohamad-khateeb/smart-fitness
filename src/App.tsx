@@ -96,7 +96,7 @@ export default function App() {
       </header>
 
       <main className="main">
-        <div className="grid three">
+        <div className="grid two">
           <section className="card fade-in">
             <h2 className="card-title">Your Profile</h2>
             <form className="form" onSubmit={(e) => e.preventDefault()}>
@@ -200,33 +200,20 @@ export default function App() {
             </div>
             <p className="note">Mifflin–St Jeor · TDEE = BMR × activity · Cut ≈ −20% · Bulk ≈ +10%</p>
           </section>
-
-
-<RecommendedTips
-  sex={sex}
-  age={age}
-  heightCm={heightCm}
-  weightKg={weightKg}
-  activity={activity}
-  goal={goal}
-  allValid={allValid}
-/>
-
-
-          
-+     
-
         </div>
 
-        <section className="card fade-in wide">
-          <h2 className="card-title">Next steps</h2>
-          <ul className="list">
-            <li>Unit toggles (kg↔lb, cm↔in)</li>
-            <li>Food DB + logging</li>
-            <li>1‑day AI meal plan (server route)</li>
-            <li>EN/HE/AR + RTL</li>
-          </ul>
-        </section>
+        <div className="grid two" style={{ marginTop: 20 }}>
+          <RecommendedTips
+            sex={sex}
+            age={age}
+            heightCm={heightCm}
+            weightKg={weightKg}
+            activity={activity}
+            goal={goal}
+            allValid={allValid}
+          />
+        </div>
+
       </main>
 
       <footer className="site-footer">Disclaimer: Informational only, not medical advice.</footer>

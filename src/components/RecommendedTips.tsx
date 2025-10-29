@@ -94,9 +94,10 @@ export default function RecommendedTips({
   }
 
   return (
-    <section className="card fade-in">
+    <>
+      <section className="card fade-in">
       <h2 className="card-title">Recommended Tips</h2>
-      <p className="note">Get personalized training & nutrition tips based on your profile. Add an optional prompt for specific advice.</p>
+      <p className="note">Ask for personalized training / nutrition tips based on the profile above. Optional: add a short prompt for the AI.</p>
 
       <form
         className="form"
@@ -118,38 +119,40 @@ export default function RecommendedTips({
         </div>
 
         <div className="actions">
-          <button 
-            className="btn primary" 
-            type="submit" 
-            disabled={tipsLoading || !allValid}
-          >
-            {tipsLoading ? "Generating tips..." : "Get AI recommendations"}
+          <button className="btn primary" type="submit" disabled={tipsLoading || !allValid}>
+            {tipsLoading ? "Generating..." : "Get AI Recommendations"}
           </button>
         </div>
 
         {tipsError && (
-          <div className="help" style={{ marginTop: 12 }}>
-            Error: {tipsError}
-          </div>
-        )}
-
-        {aiTips && (
-          <div style={{ marginTop: 16 }}>
-            <h3 className="card-title" style={{ fontSize: 16 }}>AI Recommendations</h3>
-            <div 
-              className="note" 
-              style={{ 
-                whiteSpace: "pre-wrap",
-                backgroundColor: "#f8fafc",
-                padding: "12px",
-                borderRadius: "8px"
-              }}
-            >
-              {aiTips}
-            </div>
+          <div className="help" style={{ marginTop: 12, color: "#dc2626" }}>
+            ⚠️ {tipsError}
           </div>
         )}
       </form>
-    </section>
+      </section>
+      
+      {aiTips && (
+        <section className="card fade-in" style={{ marginTop: 20 }}>
+          <h2 className="card-title">💡 Your Personalized Recommendations</h2>
+          <div 
+            style={{ 
+              whiteSpace: "pre-wrap",
+              lineHeight: "1.6",
+              fontSize: "15px",
+              padding: "16px",
+              backgroundColor: "#f8fafc",
+              borderRadius: "8px",
+              border: "1px solid #e2e8f0"
+            }}
+          >
+            {aiTips}
+          </div>
+          <div style={{ marginTop: 12, fontSize: 13, color: "#64748b" }}>
+            💭 These recommendations are based on your profile. Adjust your prompt for more specific advice.
+          </div>
+        </section>
+      )}
+    </>
   );
 }
