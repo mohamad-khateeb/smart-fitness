@@ -34,17 +34,17 @@ export const translations = {
   en: {
     // Header / Branding
     brand: "Smart Fitness",
-    tagline: "Clean, simple starter — React + CSS",
+    tagline: "Your personal fitness assistant",
     
     // Profile Section
     yourProfile: "Your Profile",
-    sex: "Sex",
+    sex: "Gender", // Change from "Sex" to "Gender"
     male: "Male",
     female: "Female",
     age: "Age",
     height: "Height (cm)",
     weight: "Weight (kg)",
-    activityLevel: "Activity level",
+    activityLevel: "Activity Level",
     goal: "Goal",
     
     // Activity Level Options
@@ -84,7 +84,7 @@ export const translations = {
     getRecommendations: "Get AI Recommendations",
     generating: "Generating...",
     yourRecommendations: "💡 Your Personalized Recommendations",
-    recommendationsNote: "💭 These recommendations are based on your profile. Adjust your prompt for more specific advice.",
+    recommendationsNote: "These recommendations are generated based on your profile.",
     
     // Validation Messages
     ageValidation: "Age must be 11–99.",
@@ -93,10 +93,10 @@ export const translations = {
     fixInputs: "Please fix profile inputs before requesting tips.",
     
     // Action Buttons
-    saveLocal: "Save (local)",
+    saveLocal: "Save to Local Storage",
     
     // Footer
-    disclaimer: "Disclaimer: Informational only, not medical advice.",
+    disclaimer: "This app is for informational purposes only.",
   },
 
   /**
@@ -107,17 +107,17 @@ export const translations = {
    */
   he: {
     // Header / Branding
-    brand: "כושר חכם",
-    tagline: "מתחיל פשוט ונקי — React + CSS",
+    brand: "סמארט פיטנס",
+    tagline: "העוזר האישי שלך לפיטנס",
     
     // Profile Section
     yourProfile: "הפרופיל שלך",
-    sex: "מין",
+    sex: "מגדר", // Change from "מין" to "מגדר"
     male: "זכר",
     female: "נקבה",
     age: "גיל",
-    height: "גובה (ס״מ)",
-    weight: "משקל (ק״ג)",
+    height: "גובה (ס\"מ)",
+    weight: "משקל (ק\"ג)",
     activityLevel: "רמת פעילות",
     goal: "מטרה",
     
@@ -158,18 +158,18 @@ export const translations = {
     getRecommendations: "קבל המלצות AI",
     generating: "מייצר...",
     yourRecommendations: "💡 ההמלצות האישיות שלך",
-    recommendationsNote: "💭 המלצות אלו מבוססות על הפרופיל שלך. התאם את ההנחיה לעצות ספציפיות יותר.",
+    recommendationsNote: "המלצות אלו נוצרות על סמך הפרופיל שלך.",
     
     // Validation Messages
     ageValidation: "גיל חייב להיות 11-99.",
-    heightValidation: "120-230 ס״מ.",
-    weightValidation: "35-240 ק״ג.",
+    heightValidation: "120-230 ס\"מ.",
+    weightValidation: "35-240 ק\"ג.",
     fixInputs: "אנא תקן את שדות הפרופיל לפני בקשת עצות.",
     
     // Action Buttons
-    saveLocal: "שמור (מקומי)",
+    saveLocal: "שמור לאחסון מקומי",
     
     // Footer
-    disclaimer: "הצהרה: מידע בלבד, לא ייעוץ רפואי.",
+    disclaimer: "אפליקציה זו מיועדת למטרות מידע בלבד.",
   },
 };

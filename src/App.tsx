@@ -335,7 +335,7 @@ export default function App() {
                   <label className={`chip ${sex === "male" ? "chip-active" : ""}`}>
                     <input 
                       type="radio" 
-                      name="sex" 
+                      name="gender" // Change from name="sex" to name="gender"
                       checked={sex === "male"} 
                       onChange={() => setSex("male")} 
                     />
@@ -344,7 +344,7 @@ export default function App() {
                   <label className={`chip ${sex === "female" ? "chip-active" : ""}`}>
                     <input 
                       type="radio" 
-                      name="sex" 
+                      name="gender" // Change from name="sex" to name="gender"
                       checked={sex === "female"} 
                       onChange={() => setSex("female")} 
                     />
