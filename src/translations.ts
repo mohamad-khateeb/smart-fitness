@@ -34,30 +34,30 @@ export const translations = {
   en: {
     // Header / Branding
     brand: "Smart Fitness",
-    tagline: "Your personal fitness assistant",
+    tagline: "AI-Powered Personalized Fitness & Nutrition",
     
     // Profile Section
     yourProfile: "Your Profile",
-    sex: "Gender", // Change from "Sex" to "Gender"
+    gender: "Gender",
     male: "Male",
     female: "Female",
-    age: "Age",
+    age: "Age (years)",
     height: "Height (cm)",
     weight: "Weight (kg)",
     activityLevel: "Activity Level",
     goal: "Goal",
     
-    // Activity Level Options
-    sedentary: "Sedentary (little to no exercise)",
-    light: "Light (1–3 days/wk)",
-    moderate: "Moderate (3–5 days/wk)",
-    very: "Very (6–7 days/wk)",
-    athlete: "Athlete (2×/day training)",
-    
     // Goal Options
     cut: "Cut",        // Lose weight/fat
     maintain: "Maintain",  // Maintain current weight
     bulk: "Bulk",      // Gain muscle mass
+    
+    // Activity Level Options
+    sedentary: "Sedentary",
+    light: "Light",
+    moderate: "Moderate",
+    very: "Very Active",
+    athlete: "Athlete",
     
     // Targets Section (Calculated Values)
     yourTargets: "Your Targets",
@@ -67,7 +67,7 @@ export const translations = {
     protein: "Protein",
     fat: "Fat",
     carbs: "Carbs",
-    targetsNote: "Mifflin–St Jeor · TDEE = BMR × activity · Cut ≈ −20% · Bulk ≈ +10%",
+    targetsNote: "Calculated using Mifflin-St Jeor equation",
     
     // Targets Section Explanations
     bmrExplanation: "Basal Metabolic Rate - the number of calories your body burns at rest just to maintain basic functions (breathing, circulation, cell production).",
@@ -77,26 +77,26 @@ export const translations = {
     macrosExplanation: "Protein helps build/maintain muscle, fats support hormones, and carbs provide energy. Distribution is optimized for your goal.",
     
     // AI Recommendations Section
-    recommendedTips: "Recommended Tips",
-    recommendationsPrompt: "Ask for personalized training / nutrition tips based on the profile above. Optional: add a short prompt for the AI.",
-    customPrompt: "Custom prompt (optional)",
-    promptPlaceholder: "e.g. focus on fat loss with 3x weekly gym, grocery-friendly meals...",
+    recommendedTips: "AI Recommendations",
+    recommendationsPrompt: "Get personalized AI-powered fitness and nutrition advice",
+    customPrompt: "Additional Instructions (Optional)",
+    promptPlaceholder: "e.g., I have knee problems, prefer home workouts...",
     getRecommendations: "Get AI Recommendations",
     generating: "Generating...",
-    yourRecommendations: "💡 Your Personalized Recommendations",
-    recommendationsNote: "These recommendations are generated based on your profile.",
+    yourRecommendations: "Your Personalized Recommendations",
+    recommendationsNote: "AI recommendations are for informational purposes. Consult professionals for medical advice.",
     
     // Validation Messages
-    ageValidation: "Age must be 11–99.",
-    heightValidation: "120–230 cm.",
-    weightValidation: "35–240 kg.",
-    fixInputs: "Please fix profile inputs before requesting tips.",
+    ageValidation: "Age must be 11-99",
+    heightValidation: "Height must be 120-230 cm",
+    weightValidation: "Weight must be 35-240 kg",
+    fixInputs: "Please fix the input errors",
     
     // Action Buttons
-    saveLocal: "Save to Local Storage",
+    saveLocal: "Save Profile",
     
     // Footer
-    disclaimer: "This app is for informational purposes only.",
+    disclaimer: "This app is for informational purposes only. Consult healthcare professionals before starting any fitness program.",
   },
 
   /**
@@ -108,30 +108,30 @@ export const translations = {
   he: {
     // Header / Branding
     brand: "סמארט פיטנס",
-    tagline: "העוזר האישי שלך לפיטנס",
+    tagline: "כושר ותזונה מותאמים אישית מבוססי AI",
     
     // Profile Section
     yourProfile: "הפרופיל שלך",
-    sex: "מגדר", // Change from "מין" to "מגדר"
+    gender: "מגדר",
     male: "זכר",
     female: "נקבה",
-    age: "גיל",
-    height: "גובה (ס\"מ)",
-    weight: "משקל (ק\"ג)",
+    age: "גיל (שנים)",
+    height: "גובה (ס״מ)",
+    weight: "משקל (ק״ג)",
     activityLevel: "רמת פעילות",
     goal: "מטרה",
-    
-    // Activity Level Options
-    sedentary: "בישיבה (מעט או ללא פעילות)",
-    light: "קלה (1-3 ימים בשבוע)",
-    moderate: "בינונית (3-5 ימים בשבוע)",
-    very: "גבוהה (6-7 ימים בשבוע)",
-    athlete: "ספורטאי (אימונים פעמיים ביום)",
     
     // Goal Options
     cut: "חיתוך",      // Lose weight/fat
     maintain: "שמירה",  // Maintain current weight
     bulk: "הגדלה",     // Gain muscle mass
+    
+    // Activity Level Options
+    sedentary: "ישיבה",
+    light: "קל",
+    moderate: "בינוני",
+    very: "פעיל מאוד",
+    athlete: "ספורטאי",
     
     // Targets Section (Calculated Values)
     yourTargets: "היעדים שלך",
@@ -141,7 +141,7 @@ export const translations = {
     protein: "חלבון",
     fat: "שומן",
     carbs: "פחמימות",
-    targetsNote: "Mifflin–St Jeor · TDEE = BMR × פעילות · חיתוך ≈ −20% · הגדלה ≈ +10%",
+    targetsNote: "מחושב לפי נוסחת Mifflin-St Jeor",
     
     // Targets Section Explanations
     bmrExplanation: "קצב מטבוליזם בסיסי - כמות הקלוריות שהגוף שורף במנוחה רק כדי לתחזק תפקודים בסיסיים (נשימה, זרימת דם, ייצור תאים).",
@@ -151,25 +151,25 @@ export const translations = {
     macrosExplanation: "חלבון עוזר לבנות/לתחזק שריר, שומנים תומכים בהורמונים, ופחמימות מספקות אנרגיה. החלוקה מותאמת למטרה שלך.",
     
     // AI Recommendations Section
-    recommendedTips: "המלצות מותאמות אישית",
-    recommendationsPrompt: "בקש עצות אימון ותזונה מותאמות אישית על סמך הפרופיל שלך. אופציונלי: הוסף הנחיה קצרה ל-AI.",
-    customPrompt: "הנחיה מותאמת אישית (אופציונלי)",
-    promptPlaceholder: "למשל: התמקדות בירידה במשקל עם 3 אימונים בשבוע, ארוחות נוחות...",
+    recommendedTips: "המלצות AI",
+    recommendationsPrompt: "קבל ייעוץ מותאם אישית לכושר ותזונה מבוסס AI",
+    customPrompt: "הנחיות נוספות (אופציונלי)",
+    promptPlaceholder: "לדוגמה, יש לי בעיות ברכיים, מעדיף אימונים בבית...",
     getRecommendations: "קבל המלצות AI",
     generating: "מייצר...",
-    yourRecommendations: "💡 ההמלצות האישיות שלך",
-    recommendationsNote: "המלצות אלו נוצרות על סמך הפרופיל שלך.",
+    yourRecommendations: "ההמלצות המותאמות שלך",
+    recommendationsNote: "המלצות AI הן למטרות מידע בלבד. התייעץ עם אנשי מקצוע לייעוץ רפואי.",
     
     // Validation Messages
-    ageValidation: "גיל חייב להיות 11-99.",
-    heightValidation: "120-230 ס\"מ.",
-    weightValidation: "35-240 ק\"ג.",
-    fixInputs: "אנא תקן את שדות הפרופיל לפני בקשת עצות.",
+    ageValidation: "הגיל חייב להיות 11-99",
+    heightValidation: "הגובה חייב להיות 120-230 ס״מ",
+    weightValidation: "המשקל חייב להיות 35-240 ק״ג",
+    fixInputs: "אנא תקן את שגיאות הקלט",
     
     // Action Buttons
-    saveLocal: "שמור לאחסון מקומי",
+    saveLocal: "שמור פרופיל",
     
     // Footer
-    disclaimer: "אפליקציה זו מיועדת למטרות מידע בלבד.",
+    disclaimer: "אפליקציה זו מיועדת למטרות מידע בלבד. התייעץ עם אנשי מקצוע בתחום הבריאות לפני תחילת כל תוכנית כושר.",
   },
 };
