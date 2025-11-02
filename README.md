@@ -33,3 +33,13 @@ Smart Fitness is a modern web application that helps users calculate their perso
 ---
 
 *Note: This app is for informational purposes only. Consult healthcare professionals before starting any fitness program.*
+
+
+<img width="1118" height="732" alt="image" src="https://github.com/user-attachments/assets/f2eb8db6-fb53-4a20-b0da-2a49565f470b" />
+
+
+
+AI recomendation : 
+<img width="1241" height="751" alt="image" src="https://github.com/user-attachments/assets/e4f90f3f-3d8a-40b1-afa9-fc70cb8da439" />
+
+
