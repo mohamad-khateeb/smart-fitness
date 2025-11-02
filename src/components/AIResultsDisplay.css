@@ -1,0 +1,53 @@
+.card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+  border: none;
+  padding: 32px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.section-header h2 {
+  color: white;
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.ai-tips-container {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.9;
+  font-size: 16px;
+  padding: 28px;
+  background-color: rgba(255, 255, 255, 0.98);
+  border-radius: 16px;
+  color: #1f2937;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  min-height: 250px;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.footer-note {
+  margin-top: 24px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
