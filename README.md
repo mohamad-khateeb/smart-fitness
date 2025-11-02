@@ -1,73 +1,35 @@
-# React + TypeScript + Vite
+# Smart Fitness 💪
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**AI-Powered Personalized Fitness & Nutrition Assistant**
 
-Currently, two official plugins are available:
+Smart Fitness is a modern web application that helps users calculate their personalized nutrition targets and receive AI-powered fitness recommendations. Built with React and TypeScript, it provides an intuitive interface for tracking fitness goals with support for both English and Hebrew languages.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- 🎯 **Personalized Calculations**: Automatic BMR, TDEE, and macro calculations using the Mifflin-St Jeor equation
+- 🤖 **AI Recommendations**: Get customized fitness and nutrition advice powered by OpenAI
+- 🌍 **Bilingual Support**: Full English and Hebrew translations with RTL layout support
+- 💾 **Data Persistence**: Your profile is automatically saved to local storage
+- 📱 **Responsive Design**: Beautiful, user-friendly interface that works on all devices
+- 📊 **Visual Targets**: Clear display of daily calorie and macro targets with explanations
+- 🎨 **Modern UI**: Gradient cards, emoji icons, and smooth animations
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend**: React 18, TypeScript
+- **Backend**: Node.js, Express
+- **AI**: OpenAI API (GPT-4)
+- **Styling**: Custom CSS with gradient designs
+- **Storage**: LocalStorage for data persistence
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Set up your OpenAI API key in the backend
+4. Start the development server: `npm start`
+5. Start the backend server: `node server.js`
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+*Note: This app is for informational purposes only. Consult healthcare professionals before starting any fitness program.*
